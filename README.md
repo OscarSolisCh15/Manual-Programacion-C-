@@ -6,11 +6,9 @@ Manual didáctico de Programación en C++ orientado a estudiantes de la Facultad
 Material didáctico para **Programación I** (Facultad de Ciencias).  
 Incluye el **PDF compilado** y la **fuente en LaTeX**.
 
-##  PDF
-- **Abrir / Descargar:** [Manual (PDF)](manual.pdf)
 
-##  Fuente LaTeX
-- Archivo principal: [`tex/main.tex`](tex/main.tex)
+## PDF (vista rápida)
+[![Vista previa del compendio](cover.png)](Manual-PDF.pdf)
 
-##  Compilación
-El PDF se genera automáticamente con GitHub Actions (workflow `build-pdf.yml`).
+-  Abrir: **[Compendio.pdf](Manual-PDF.pdf)**
+- Fuente LaTeX: **[tex/](tex/)**
