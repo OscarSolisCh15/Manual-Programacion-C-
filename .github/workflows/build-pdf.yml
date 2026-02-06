@@ -16,33 +16,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # DEBUG: lista el contenido para verificar nombre/ruta del .tex
-      - name: List repo files
+      - name: Debug tree
         run: |
           echo "===== ROOT ====="
           ls -la
-          echo ""
           echo "===== TEX FOLDER ====="
           ls -la tex || true
-          echo ""
-          echo "===== FIND .TEX FILES ====="
-          find . -maxdepth 3 -type f -name "*.tex" -print
+          echo "===== FIND TEX ====="
+          find . -maxdepth 4 -type f -name "*.tex" -print
 
-      # IMPORTANTE:
-      # 1) Asegúrate de que tu archivo principal se llame EXACTAMENTE main.tex
-      # 2) y que esté dentro de la carpeta tex/
-      #
-      # Si tu archivo tiene otro nombre:
-      #   - Renómbralo a main.tex (recomendado), o
-      #   - Cambia root_file por el nombre exacto
+      - name: Ensure main.tex exists
+        run: |
+          test -f /main.tex || (echo "ERROR: tex/main.tex NO existe. Renombra o corrige root_file." && exit 1)
+
       - name: Compile LaTeX
         uses: xu-cheng/latex-action@v4
         with:
           working_directory: tex
           root_file: main.tex
 
-      - name: Upload PDF
+      - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Compendio-PDF
+          name: Manual-PDF
           path: tex/main.pdf
