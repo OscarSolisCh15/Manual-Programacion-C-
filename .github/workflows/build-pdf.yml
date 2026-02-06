@@ -16,20 +16,33 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # DEBUG: lista el contenido para verificar nombre/ruta del .tex
+      - name: List repo files
+        run: |
+          echo "===== ROOT ====="
+          ls -la
+          echo ""
+          echo "===== TEX FOLDER ====="
+          ls -la tex || true
+          echo ""
+          echo "===== FIND .TEX FILES ====="
+          find . -maxdepth 3 -type f -name "*.tex" -print
+
+      # IMPORTANTE:
+      # 1) Asegúrate de que tu archivo principal se llame EXACTAMENTE main.tex
+      # 2) y que esté dentro de la carpeta tex/
+      #
+      # Si tu archivo tiene otro nombre:
+      #   - Renómbralo a main.tex (recomendado), o
+      #   - Cambia root_file por el nombre exacto
       - name: Compile LaTeX
         uses: xu-cheng/latex-action@v4
         with:
           working_directory: tex
           root_file: main.tex
 
-      # Deja el PDF con nombre fijo "manual.pdf" en la raíz del repo
-      - name: Copy PDF to repo root
-        run: |
-          cp tex/main.pdf manual.pdf
-
-      # Sube el PDF como artefacto (descarga desde Actions)
-      - name: Upload PDF artifact
+      - name: Upload PDF
         uses: actions/upload-artifact@v4
         with:
-          name: Manual-PDF
-          path: manual.pdf
+          name: Compendio-PDF
+          path: tex/main.pdf
