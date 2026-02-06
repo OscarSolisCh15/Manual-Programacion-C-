@@ -38,5 +38,5 @@ jobs:
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Manual-PDF
+          name: Manual
           path: tex/main.pdf
