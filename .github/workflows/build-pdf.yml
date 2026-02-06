@@ -1,0 +1,35 @@
+name: Build LaTeX PDF
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "tex/**"
+      - ".github/workflows/build-pdf.yml"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Compile LaTeX
+        uses: xu-cheng/latex-action@v4
+        with:
+          working_directory: tex
+          root_file: main.tex
+
+      # Deja el PDF con nombre fijo "manual.pdf" en la raíz del repo
+      - name: Copy PDF to repo root
+        run: |
+          cp tex/main.pdf manual.pdf
+
+      # Sube el PDF como artefacto (descarga desde Actions)
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Manual-PDF
+          path: manual.pdf
