@@ -8,7 +8,7 @@ Incluye el **PDF compilado** y la **fuente en LaTeX**.
 
 
 ## PDF (vista rápida)
-[![Vista previa del compendio](cover.png)](Manual-PDF.pdf)
+[![Vista previa del compendio](cover.png)](Manual.pdf)
 
--  Abrir: **[Compendio.pdf](Manual-PDF.pdf)**
+-  Abrir: **[Manual.pdf](Manual.pdf)**
 - Fuente LaTeX: **[tex/](tex/)**
