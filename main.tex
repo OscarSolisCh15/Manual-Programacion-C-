@@ -1,0 +1,893 @@
+\documentclass[a4paper,11pt]{article}
+
+%-----------------------------------------------------
+% PAQUETES BÁSICOS
+%-----------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+\renewcommand\familydefault{\sfdefault}
+\usepackage{tgheros}
+
+\usepackage{amsmath,amssymb,amsthm,textcomp}
+\usepackage{enumerate}
+\usepackage{multicol}
+\usepackage{tikz}
+
+\usepackage{geometry}
+\geometry{
+  left=25mm,
+  right=25mm,
+  top=20mm,
+  bottom=20mm
+}
+
+\linespread{1.3}
+
+\newcommand{\linia}{\rule{\linewidth}{0.5pt}}
+
+%-----------------------------------------------------
+% ESTILOS DE TEOREMAS (POR SI SE USAN MÁS ADELANTE)
+%-----------------------------------------------------
+\newtheoremstyle{mytheor}
+    {1ex}{1ex}{\normalfont}{0pt}{\scshape}{.}{1ex}
+    {{\thmname{#1 }}{\thmnumber{#2}}{\thmnote{ (#3)}}}
+
+\theoremstyle{mytheor}
+\newtheorem{defi}{Definición}
+
+%-----------------------------------------------------
+% FORMATO DEL TÍTULO
+%-----------------------------------------------------
+\makeatletter
+\renewcommand{\maketitle}{
+\begin{center}
+\vspace{2ex}
+{\huge \textsc{\@title}}
+\vspace{1ex}
+\\
+\linia\\
+\@author \hfill \@date
+\vspace{4ex}
+\end{center}
+}
+\makeatother
+
+%-----------------------------------------------------
+% ENCABEZADOS Y PIES DE PÁGINA
+%-----------------------------------------------------
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{}
+\lfoot{Programación en C++ para Actuaría}
+\cfoot{}
+\rfoot{Página \thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+%-----------------------------------------------------
+% CONFIGURACIÓN PARA CÓDIGO C++
+%-----------------------------------------------------
+\usepackage{listings}
+\lstset{
+    language=C++,
+    basicstyle=\ttfamily\small,
+    aboveskip=1em,
+    belowskip=1em,
+    columns=fixed,
+    extendedchars=true,
+    breaklines=true,
+    tabsize=4,
+    frame=lines,
+    showtabs=false,
+    showspaces=false,
+    showstringspaces=false,
+    keywordstyle=\color[rgb]{0.1,0.1,0.8},
+    commentstyle=\color[rgb]{0.1,0.5,0.1},
+    stringstyle=\color[rgb]{0.7,0,0},
+    numbers=left,
+    numberstyle=\tiny,
+    stepnumber=1,
+    numbersep=10pt,
+    captionpos=t
+}
+
+%=====================================================
+\begin{document}
+%=====================================================
+
+\title{Programación en C++ para alumnos de la Facultad de Ciencias\\}
+
+\author{Oscar Roberto Solis Chávez\\
+Servicio Social: Apoyo a la Docencia y Asesoría Académica}
+
+\date{Enero 2026}
+
+\maketitle
+
+%=====================================================
+\section*{Introducción}
+%=====================================================
+
+La programación constituye una herramienta fundamental en la formación moderna del actuario, al permitir la implementación, análisis y validación de modelos matemáticos que describen fenómenos financieros, demográficos y de riesgo. En este contexto, aprender a programar no implica únicamente dominar la sintaxis de un lenguaje, sino desarrollar la capacidad de traducir razonamientos cuantitativos en algoritmos estructurados, claros y reproducibles.
+
+En la Licenciatura en Actuaría, la asignatura \textbf{Programación I} representa el primer acercamiento formal del estudiante al pensamiento computacional. Este curso cumple un papel estratégico dentro del plan de estudios, ya que sienta las bases para el uso posterior de métodos numéricos, simulación, análisis de datos y modelación estocástica, todos ellos componentes esenciales del ejercicio profesional del actuario.
+
+El presente libro se desarrolla como material de apoyo didáctico para dicha asignatura y surge de la experiencia del autor como apoyo a la docencia, con el propósito de fortalecer la integración entre el razonamiento matemático-actuarial y su implementación computacional en lenguaje C++, favoreciendo así una comprensión más profunda y significativa de la programación como herramienta de modelación cuantitativa.
+
+%=====================================================
+\section{Introducción a la Programación en la Formación Actuarial}
+%=====================================================
+
+La programación constituye una herramienta central en la práctica actuarial contemporánea. A través de ella es posible implementar modelos matemáticos, automatizar cálculos repetitivos, analizar grandes volúmenes de información y explorar escenarios de riesgo bajo distintos supuestos. En este sentido, la programación no debe concebirse únicamente como una habilidad técnica, sino como un componente esencial del razonamiento cuantitativo del actuario.
+
+La asignatura \textbf{Programación I} tiene como objetivo introducir al estudiante en el pensamiento algorítmico, proporcionando las bases necesarias para expresar problemas matemáticos de forma estructurada y resolverlos mediante instrucciones computacionales precisas.
+
+%-----------------------------------------------------
+\subsection{Programación como lenguaje del razonamiento matemático}
+%-----------------------------------------------------
+
+Desde una perspectiva académica, la programación puede entenderse como una extensión natural del razonamiento matemático. Así como una demostración formal sigue una secuencia lógica de pasos que conducen a un resultado, un programa computacional expresa dichas etapas mediante instrucciones que una computadora puede ejecutar de forma sistemática.
+
+Para el actuario, esta traducción resulta particularmente relevante, ya que muchos de los conceptos fundamentales de la disciplina —como sumatorias, productos, tasas de interés, valores esperados y distribuciones discretas— poseen una estructura inherentemente algorítmica. La programación permite, por tanto, explorar estos conceptos de manera experimental, verificar resultados y analizar su comportamiento bajo distintos escenarios.
+
+%-----------------------------------------------------
+\subsection{El lenguaje C++ como herramienta formativa}
+%-----------------------------------------------------
+
+El lenguaje de programación C++ se caracteriza por su eficiencia, su control explícito de los recursos y su cercanía con la estructura lógica de los algoritmos. Estas características lo convierten en una herramienta adecuada para la formación inicial en programación, ya que obliga al estudiante a comprender con claridad el flujo de ejecución de un programa, el uso correcto de las variables y la importancia de la precisión en los cálculos numéricos.
+
+En este libro, C++ se utiliza no como un fin en sí mismo, sino como un medio para desarrollar habilidades analíticas y estructurales. Los ejemplos y ejercicios presentados priorizan la claridad conceptual sobre la complejidad técnica, con el objetivo de construir una base sólida que facilite el aprendizaje posterior de lenguajes y herramientas computacionales más avanzadas.
+
+%-----------------------------------------------------
+\subsection{Alcance y organización del libro}
+%-----------------------------------------------------
+
+El presente libro ha sido diseñado como material de apoyo para la asignatura \textbf{Programación I} de la Licenciatura en Actuaría. Su contenido se organiza de manera progresiva, comenzando con los fundamentos del pensamiento algorítmico y avanzando gradualmente hacia la simulación de fenómenos aleatorios simples mediante técnicas computacionales.
+
+Cada capítulo incluye:
+\begin{itemize}
+    \item Una introducción conceptual orientada a contextualizar el tema.
+    \item Ejemplos prácticos desarrollados en lenguaje C++.
+    \item Ejercicios guiados diseñados para el aprendizaje autónomo y supervisado.
+    \item Comentarios sobre errores comunes y buenas prácticas de programación.
+\end{itemize}
+
+El enfoque adoptado busca promover una comprensión activa de la programación como herramienta de modelación cuantitativa, favoreciendo la integración entre los conocimientos matemáticos previos del estudiante y su implementación computacional.
+
+%-----------------------------------------------------
+\subsection{Objetivos de aprendizaje}
+%-----------------------------------------------------
+
+Al finalizar el estudio de este libro, se espera que el estudiante sea capaz de:
+\begin{enumerate}
+    \item Reconocer la programación como un instrumento fundamental para la resolución de problemas actuariales básicos.
+    \item Traducir expresiones matemáticas simples en algoritmos computacionales estructurados.
+    \item Implementar programas en C++ que utilicen correctamente variables, estructuras de control y funciones.
+    \item Analizar resultados numéricos desde una perspectiva crítica, reconociendo el impacto de la precisión y de los supuestos del modelo.
+\end{enumerate}
+
+%=====================================================
+\section{Pensamiento Algorítmico y Precisión Numérica}
+%=====================================================
+
+Uno de los principales objetivos de la asignatura \textbf{Programación I} es desarrollar en el estudiante la capacidad de analizar un problema cuantitativo y estructurar su solución de manera lógica y ordenada. Este proceso, conocido como \textit{pensamiento algorítmico}, constituye la base sobre la cual se construyen todos los programas computacionales, independientemente del lenguaje utilizado.
+
+En el contexto actuarial, el pensamiento algorítmico resulta especialmente relevante, ya que gran parte de los modelos utilizados en la práctica profesional se apoyan en procedimientos repetitivos, acumulativos o iterativos, los cuales deben ser formulados con precisión para garantizar resultados consistentes y confiables.
+
+%-----------------------------------------------------
+\subsection{Del problema matemático al algoritmo}
+%-----------------------------------------------------
+
+Un algoritmo puede definirse como una secuencia finita y ordenada de pasos que permiten resolver un problema específico. En términos matemáticos, muchas expresiones pueden parecer compactas y simples; sin embargo, su implementación computacional requiere descomponerlas en instrucciones elementales que la computadora pueda ejecutar.
+
+Por ejemplo, una sumatoria matemática debe traducirse en un proceso iterativo que acumule valores paso a paso. Esta traducción obliga al estudiante a reflexionar sobre el orden de las operaciones, el valor inicial de las variables y las condiciones de término, fortaleciendo así su comprensión del problema original.
+
+En este sentido, programar no solo permite obtener un resultado numérico, sino también comprender con mayor profundidad la estructura del modelo matemático que se está implementando.
+
+%-----------------------------------------------------
+\subsection{Variables y tipos de datos}
+%-----------------------------------------------------
+
+Las variables constituyen uno de los elementos fundamentales de cualquier programa. En C++, una variable representa un espacio en memoria donde se almacena un valor que puede modificarse durante la ejecución del programa. Cada variable debe declararse con un tipo de dato específico, el cual determina la naturaleza de la información que puede almacenar y las operaciones que pueden realizarse sobre ella.
+
+En aplicaciones actuariales, es común trabajar con cantidades que incluyen decimales, como tasas, probabilidades o montos monetarios. Por esta razón, el uso de tipos de datos adecuados, como \texttt{float} o \texttt{double}, resulta esencial para evitar errores de truncamiento o pérdida de precisión.
+
+La elección correcta del tipo de dato no es una decisión meramente técnica, sino una parte fundamental del modelado cuantitativo, ya que influye directamente en la calidad y confiabilidad de los resultados obtenidos.
+
+%-----------------------------------------------------
+\subsection{Precisión numérica y errores de redondeo}
+%-----------------------------------------------------
+
+En el ámbito computacional, los números reales no pueden representarse de manera exacta en todos los casos, debido a las limitaciones inherentes al sistema binario utilizado por las computadoras. Como consecuencia, muchas operaciones aritméticas producen aproximaciones que pueden acumular errores a lo largo de un cálculo.
+
+En el contexto actuarial, estos errores pueden tener un impacto significativo cuando se realizan cálculos iterativos o acumulativos, como en el caso de intereses compuestos, valores presentes o simulaciones numéricas. Por ello, es indispensable que el estudiante sea consciente de la existencia de errores de redondeo y comprenda cómo estos pueden afectar los resultados finales.
+
+El análisis crítico de los resultados obtenidos mediante programación constituye una competencia clave en la formación del actuario, quien debe ser capaz de identificar posibles inconsistencias y evaluar la razonabilidad de los valores calculados.
+
+%-----------------------------------------------------
+\subsection{Primer ejemplo: acumulación de capital}
+%-----------------------------------------------------
+
+A continuación se presenta un ejemplo sencillo que ilustra la traducción de una expresión matemática a un algoritmo computacional. El programa calcula el monto acumulado de un capital inicial bajo una tasa de interés fija durante un número determinado de periodos.
+
+\begin{lstlisting}[caption=AcumulacionCapital.cpp]
+#include <iostream>
+using namespace std;
+
+int main() {
+    double capitalInicial;
+    double tasa;
+    int periodos;
+    double capitalFinal;
+
+    cout << "Ingrese el capital inicial: ";
+    cin >> capitalInicial;
+
+    cout << "Ingrese la tasa de interes (en forma decimal): ";
+    cin >> tasa;
+
+    cout << "Ingrese el numero de periodos: ";
+    cin >> periodos;
+
+    capitalFinal = capitalInicial;
+
+    for(int i = 1; i <= periodos; i++) {
+        capitalFinal = capitalFinal * (1 + tasa);
+    }
+
+    cout << "Capital acumulado: " << capitalFinal << endl;
+
+    return 0;
+}
+\end{lstlisting}
+
+Este ejemplo permite observar cómo una fórmula matemática de acumulación se implementa mediante un ciclo iterativo. Asimismo, pone de manifiesto la importancia de inicializar correctamente las variables y de utilizar tipos de datos adecuados para preservar la precisión de los cálculos.
+
+%-----------------------------------------------------
+\subsection{Objetivos de aprendizaje del capítulo}
+%-----------------------------------------------------
+
+Al finalizar este capítulo, se espera que el estudiante sea capaz de:
+\begin{enumerate}
+    \item Comprender el concepto de pensamiento algorítmico y su relación con el razonamiento matemático.
+    \item Traducir expresiones matemáticas simples en algoritmos computacionales.
+    \item Seleccionar adecuadamente tipos de datos en función del problema planteado.
+    \item Reconocer la existencia de errores de redondeo y su impacto en cálculos numéricos.
+    \item Implementar programas básicos en C++ que resuelvan problemas cuantitativos de forma estructurada.
+\end{enumerate}
+
+%=====================================================
+\section{Control de Flujo y Modelación Determinística}
+%=====================================================
+
+En la resolución de problemas cuantitativos, no todos los procesos siguen una secuencia lineal de operaciones. En muchos casos, el comportamiento del modelo depende de condiciones específicas o requiere la repetición sistemática de ciertos cálculos. En programación, este tipo de lógica se implementa mediante las estructuras de \textit{control de flujo}, las cuales permiten modificar el orden de ejecución de las instrucciones en función de condiciones o iteraciones.
+
+En el contexto actuarial, las estructuras de control de flujo son fundamentales para modelar procesos determinísticos como la acumulación de capital, la evaluación de escenarios financieros, la clasificación de riesgos bajo reglas predefinidas y la simulación de trayectorias bajo supuestos fijos. Este capítulo introduce las principales estructuras de control en C++ y muestra su aplicación en ejemplos cuantitativos sencillos.
+
+%-----------------------------------------------------
+\subsection{Estructuras condicionales: decisiones en modelos cuantitativos}
+%-----------------------------------------------------
+
+Las estructuras condicionales permiten que un programa tome decisiones a partir de la evaluación de una condición lógica. En C++, estas decisiones se implementan principalmente mediante las sentencias \texttt{if}, \texttt{else if} y \texttt{else}.
+
+Desde un punto de vista actuarial, las estructuras condicionales resultan útiles para representar reglas de decisión como la aplicación de tasas diferenciadas, la clasificación de contratos o la validación de supuestos. Estas decisiones no introducen aleatoriedad, sino que responden a criterios determinísticos previamente establecidos.
+
+%-----------------------------------------------------
+\subsection{Ejemplo: clasificación de una tasa de interés}
+%-----------------------------------------------------
+
+El siguiente programa clasifica una tasa de interés ingresada por el usuario en distintos rangos, ilustrando el uso de estructuras condicionales.
+
+\begin{lstlisting}[caption=ClasificacionTasa.cpp]
+#include <iostream>
+using namespace std;
+
+int main() {
+    double tasa;
+
+    cout << "Ingrese la tasa de interes (en forma decimal): ";
+    cin >> tasa;
+
+    if (tasa < 0) {
+        cout << "La tasa ingresada no es valida." << endl;
+    } else if (tasa < 0.05) {
+        cout << "Tasa baja." << endl;
+    } else if (tasa < 0.10) {
+        cout << "Tasa media." << endl;
+    } else {
+        cout << "Tasa alta." << endl;
+    }
+
+    return 0;
+}
+\end{lstlisting}
+
+Este ejemplo muestra cómo un conjunto de reglas puede traducirse de forma directa a un algoritmo computacional. Además, resalta la importancia de validar los datos de entrada antes de utilizarlos en un modelo.
+
+%-----------------------------------------------------
+\subsection{Estructuras iterativas: repetición de procesos}
+%-----------------------------------------------------
+
+En muchos modelos actuariales, un mismo cálculo debe repetirse múltiples veces, ya sea a lo largo del tiempo o sobre distintos elementos de un conjunto de datos. Para este tipo de situaciones, los lenguajes de programación proporcionan estructuras iterativas que permiten ejecutar un bloque de instrucciones de manera repetida.
+
+En C++, las estructuras iterativas más utilizadas son los ciclos \texttt{for} y \texttt{while}. La elección entre uno u otro depende de si el número de repeticiones es conocido de antemano o si depende de una condición que se evalúa durante la ejecución del programa.
+
+%-----------------------------------------------------
+\subsection{Ejemplo: acumulación de capital con ciclo \texttt{for}}
+%-----------------------------------------------------
+
+El siguiente ejemplo retoma el problema de la acumulación de capital y lo formula explícitamente como un proceso iterativo a lo largo del tiempo.
+
+\begin{lstlisting}[caption=AcumulacionFor.cpp]
+#include <iostream>
+using namespace std;
+
+int main() {
+    double capitalInicial;
+    double tasa;
+    int periodos;
+    double capital;
+
+    cout << "Ingrese el capital inicial: ";
+    cin >> capitalInicial;
+
+    cout << "Ingrese la tasa de interes (en forma decimal): ";
+    cin >> tasa;
+
+    cout << "Ingrese el numero de periodos: ";
+    cin >> periodos;
+
+    capital = capitalInicial;
+
+    for (int t = 1; t <= periodos; t++) {
+        capital = capital * (1 + tasa);
+    }
+
+    cout << "Capital acumulado al final del periodo: " << capital << endl;
+
+    return 0;
+}
+\end{lstlisting}
+
+Este programa ilustra cómo un proceso financiero determinístico puede representarse mediante una estructura iterativa, haciendo explícita la evolución del capital periodo a periodo.
+
+%-----------------------------------------------------
+\subsection{El ciclo \texttt{while} y condiciones de término}
+%-----------------------------------------------------
+
+A diferencia del ciclo \texttt{for}, el ciclo \texttt{while} se utiliza cuando el número de repeticiones no se conoce con anticipación y depende del cumplimiento de una condición lógica. Este tipo de estructura es común en procesos donde se desea alcanzar un cierto umbral o criterio de convergencia.
+
+En modelos actuariales determinísticos, el ciclo \texttt{while} puede emplearse, por ejemplo, para determinar el número de periodos necesarios para que un capital alcance cierto valor objetivo bajo una tasa fija.
+
+%-----------------------------------------------------
+\subsection{Ejemplo: alcanzar un capital objetivo}
+%-----------------------------------------------------
+
+El siguiente programa calcula el número de periodos necesarios para que un capital inicial alcance o supere un valor objetivo.
+
+\begin{lstlisting}[caption=CapitalObjetivo.cpp]
+#include <iostream>
+using namespace std;
+
+int main() {
+    double capitalInicial;
+    double tasa;
+    double capitalObjetivo;
+    double capital;
+    int periodos = 0;
+
+    cout << "Ingrese el capital inicial: ";
+    cin >> capitalInicial;
+
+    cout << "Ingrese la tasa de interes (en forma decimal): ";
+    cin >> tasa;
+
+    cout << "Ingrese el capital objetivo: ";
+    cin >> capitalObjetivo;
+
+    capital = capitalInicial;
+
+    while (capital < capitalObjetivo) {
+        capital = capital * (1 + tasa);
+        periodos++;
+    }
+
+    cout << "Numero de periodos necesarios: " << periodos << endl;
+    cout << "Capital alcanzado: " << capital << endl;
+
+    return 0;
+}
+\end{lstlisting}
+
+Este ejemplo muestra cómo el control de flujo permite modelar procesos cuyo horizonte temporal no es fijo, sino que depende del comportamiento del modelo.
+
+%-----------------------------------------------------
+\subsection{Modelación determinística en programación}
+%-----------------------------------------------------
+
+Los ejemplos presentados en este capítulo corresponden a modelos determinísticos, es decir, modelos en los que los resultados están completamente determinados por los valores de entrada y no interviene ningún componente aleatorio. Este tipo de modelos constituye la base sobre la cual se construyen posteriormente modelos más complejos que incorporan incertidumbre y simulación.
+
+Comprender y dominar la modelación determinística es un paso indispensable antes de introducir técnicas estocásticas, como el método de Monte Carlo, las cuales serán abordadas en capítulos posteriores.
+
+%-----------------------------------------------------
+\subsection{Objetivos de aprendizaje del capítulo}
+%-----------------------------------------------------
+
+Al finalizar este capítulo, se espera que el estudiante sea capaz de:
+\begin{enumerate}
+    \item Utilizar estructuras condicionales para modelar decisiones determinísticas.
+    \item Implementar ciclos \texttt{for} y \texttt{while} para representar procesos repetitivos.
+    \item Traducir reglas y procedimientos actuariales simples a estructuras de control de flujo.
+    \item Analizar el comportamiento de modelos determinísticos mediante programación en C++.
+    \item Preparar la base conceptual para la introducción de modelos estocásticos.
+\end{enumerate}
+
+%=====================================================
+\section{Funciones y Modularidad en Problemas Actuariales}
+%=====================================================
+
+A medida que los problemas computacionales aumentan en complejidad, se vuelve indispensable organizar el código de manera estructurada y reutilizable. En programación, este objetivo se logra principalmente mediante el uso de \textit{funciones}, las cuales permiten encapsular un conjunto de instrucciones que realizan una tarea específica y pueden ser invocadas múltiples veces dentro de un programa.
+
+En el ámbito actuarial, las funciones adquieren un papel central, ya que muchos cálculos fundamentales —como primas, valores presentes, acumulaciones o probabilidades— se definen matemáticamente como funciones. La implementación computacional de estos conceptos mediante funciones facilita la claridad del modelo, reduce errores y mejora la mantenibilidad del código.
+
+%-----------------------------------------------------
+\subsection{Concepto de función en programación}
+%-----------------------------------------------------
+
+Desde un punto de vista computacional, una función es un bloque de código que recibe uno o más valores de entrada, realiza una serie de operaciones y devuelve un resultado. En C++, las funciones permiten dividir un problema complejo en subproblemas más simples, cada uno con una responsabilidad bien definida.
+
+Esta idea es consistente con el enfoque matemático utilizado en Actuaría, donde los modelos suelen construirse a partir de funciones que describen relaciones entre variables. Al programar dichas funciones, el estudiante refuerza la correspondencia entre el modelo teórico y su implementación computacional.
+
+%-----------------------------------------------------
+\subsection{Ventajas de la modularidad}
+%-----------------------------------------------------
+
+El uso de funciones introduce el principio de \textit{modularidad}, el cual consiste en estructurar un programa en componentes independientes que pueden desarrollarse, probarse y reutilizarse de manera separada. Entre las principales ventajas de la modularidad se encuentran:
+\begin{itemize}
+    \item Mayor claridad en la lectura y comprensión del código.
+    \item Reducción de errores al evitar la repetición innecesaria de instrucciones.
+    \item Facilidad para modificar o extender un modelo existente.
+    \item Posibilidad de reutilizar funciones en distintos contextos actuariales.
+\end{itemize}
+
+Estas ventajas resultan especialmente relevantes en la práctica profesional del actuario, donde los modelos suelen evolucionar y adaptarse a nuevas condiciones o supuestos.
+
+%-----------------------------------------------------
+\subsection{Definición y uso de funciones en C++}
+%-----------------------------------------------------
+
+En C++, una función se define especificando su tipo de retorno, su nombre y los parámetros que recibe. Posteriormente, la función puede ser invocada desde el programa principal u otras funciones.
+
+El siguiente ejemplo muestra la definición de una función que calcula el monto acumulado de un capital bajo interés simple, ilustrando la correspondencia directa entre la fórmula matemática y su implementación computacional.
+
+\begin{lstlisting}[caption=InteresSimple.cpp]
+#include <iostream>
+using namespace std;
+
+// Funcion que calcula el monto bajo interes simple
+double interesSimple(double capital, double tasa, int periodos) {
+    return capital * (1 + tasa * periodos);
+}
+
+int main() {
+    double capital;
+    double tasa;
+    int periodos;
+
+    cout << "Ingrese el capital inicial: ";
+    cin >> capital;
+
+    cout << "Ingrese la tasa de interes (en forma decimal): ";
+    cin >> tasa;
+
+    cout << "Ingrese el numero de periodos: ";
+    cin >> periodos;
+
+    double monto = interesSimple(capital, tasa, periodos);
+
+    cout << "Monto acumulado bajo interes simple: " << monto << endl;
+
+    return 0;
+}
+\end{lstlisting}
+
+Este ejemplo permite observar cómo una función encapsula un cálculo actuarial específico, facilitando su reutilización y comprensión.
+
+%-----------------------------------------------------
+\subsection{Funciones con interés compuesto}
+%-----------------------------------------------------
+
+De manera análoga, es posible definir una función que implemente el cálculo de interés compuesto, utilizando un proceso iterativo. Este enfoque refuerza la relación entre funciones, ciclos y modelación determinística.
+
+\begin{lstlisting}[caption=InteresCompuesto.cpp]
+#include <iostream>
+using namespace std;
+
+// Funcion que calcula el monto bajo interes compuesto
+double interesCompuesto(double capital, double tasa, int periodos) {
+    double monto = capital;
+
+    for (int t = 1; t <= periodos; t++) {
+        monto = monto * (1 + tasa);
+    }
+
+    return monto;
+}
+
+int main() {
+    double capital;
+    double tasa;
+    int periodos;
+
+    cout << "Ingrese el capital inicial: ";
+    cin >> capital;
+
+    cout << "Ingrese la tasa de interes (en forma decimal): ";
+    cin >> tasa;
+
+    cout << "Ingrese el numero de periodos: ";
+    cin >> periodos;
+
+    double monto = interesCompuesto(capital, tasa, periodos);
+
+    cout << "Monto acumulado bajo interes compuesto: " << monto << endl;
+
+    return 0;
+}
+\end{lstlisting}
+
+La separación del cálculo en una función permite modificar fácilmente el modelo, por ejemplo, incorporando tasas variables o condiciones adicionales.
+
+%-----------------------------------------------------
+\subsection{Paso de parámetros y claridad del modelo}
+%-----------------------------------------------------
+
+El paso de parámetros a una función constituye un elemento clave en la construcción de modelos claros y transparentes. Al especificar explícitamente las variables de entrada, se hace evidente qué supuestos intervienen en el cálculo y cómo influyen en el resultado.
+
+En aplicaciones actuariales, esta claridad resulta fundamental para la validación y documentación de los modelos, ya que facilita la revisión de los supuestos utilizados y la interpretación de los resultados obtenidos.
+
+%-----------------------------------------------------
+\subsection{Ejemplo actuarial: prima pura simple}
+%-----------------------------------------------------
+
+El siguiente ejemplo ilustra el uso de funciones para calcular una prima pura simple a partir de la frecuencia esperada de siniestros y el costo medio por siniestro.
+
+\begin{lstlisting}[caption=PrimaPura.cpp]
+#include <iostream>
+using namespace std;
+
+// Funcion que calcula la prima pura simple
+double primaPura(double frecuencia, double severidadMedia) {
+    return frecuencia * severidadMedia;
+}
+
+int main() {
+    double frecuencia;
+    double severidadMedia;
+
+    cout << "Ingrese la frecuencia esperada de siniestros: ";
+    cin >> frecuencia;
+
+    cout << "Ingrese la severidad media: ";
+    cin >> severidadMedia;
+
+    double prima = primaPura(frecuencia, severidadMedia);
+
+    cout << "Prima pura simple: " << prima << endl;
+
+    return 0;
+}
+\end{lstlisting}
+
+Este ejemplo muestra cómo las funciones permiten representar de forma directa conceptos actuariales fundamentales, reforzando la conexión entre teoría y práctica computacional.
+
+%-----------------------------------------------------
+\subsection{Objetivos de aprendizaje del capítulo}
+%-----------------------------------------------------
+
+Al finalizar este capítulo, se espera que el estudiante sea capaz de:
+\begin{enumerate}
+    \item Comprender el concepto de función como herramienta de abstracción y reutilización.
+    \item Implementar funciones en C++ para modelar cálculos actuariales básicos.
+    \item Utilizar parámetros de entrada para representar supuestos del modelo.
+    \item Integrar funciones con estructuras de control para resolver problemas cuantitativos.
+    \item Desarrollar código modular, claro y fácilmente extensible.
+\end{enumerate}
+
+%=====================================================
+\section{Arreglos y Vectores como Representación Discreta de Datos Actuariales}
+%=====================================================
+
+En la práctica actuarial, es poco común trabajar únicamente con valores aislados. Con frecuencia, los modelos se construyen a partir de conjuntos de observaciones, tales como montos de siniestros, tasas históricas, flujos de efectivo o registros de pagos. En programación, este tipo de información se representa mediante \textit{estructuras de datos}, siendo los arreglos y vectores las más elementales y fundamentales.
+
+El uso adecuado de arreglos y vectores permite al estudiante pasar de cálculos individuales a la manipulación sistemática de datos discretos, sentando las bases para el análisis estadístico, la simulación y la modelación de fenómenos aleatorios que serán abordados en capítulos posteriores.
+
+%-----------------------------------------------------
+\subsection{Concepto de arreglo en programación}
+%-----------------------------------------------------
+
+Un arreglo es una estructura de datos que permite almacenar múltiples valores del mismo tipo bajo un solo nombre, organizados de manera secuencial en memoria. Cada elemento del arreglo se identifica mediante un índice, el cual indica su posición relativa dentro de la estructura.
+
+Desde una perspectiva actuarial, un arreglo puede interpretarse como una colección finita de observaciones de una variable aleatoria discreta o como una discretización de un fenómeno continuo. Esta interpretación facilita la transición conceptual entre los datos empíricos y los modelos matemáticos que buscan describirlos.
+
+%-----------------------------------------------------
+\subsection{Declaración y uso de arreglos en C++}
+%-----------------------------------------------------
+
+En C++, un arreglo se declara especificando el tipo de dato de sus elementos y el número de posiciones que contiene. El acceso a los elementos del arreglo se realiza mediante índices enteros, comenzando siempre desde cero.
+
+El siguiente ejemplo ilustra el uso de un arreglo para almacenar y analizar montos de siniestros observados.
+
+\begin{lstlisting}[caption=ArregloSiniestros.cpp]
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    double suma = 0.0;
+
+    cout << "Ingrese el numero de siniestros observados: ";
+    cin >> n;
+
+    double siniestros[n];
+
+    for (int i = 0; i < n; i++) {
+        cout << "Ingrese el monto del siniestro " << i + 1 << ": ";
+        cin >> siniestros[i];
+        suma += siniestros[i];
+    }
+
+    double promedio = suma / n;
+
+    cout << "Monto promedio de siniestros: " << promedio << endl;
+
+    return 0;
+}
+\end{lstlisting}
+
+Este programa permite observar cómo un conjunto de datos puede almacenarse y procesarse de forma sistemática mediante un ciclo, resaltando la relación entre arreglos y estructuras iterativas.
+
+%-----------------------------------------------------
+\subsection{Vectores como extensión flexible de los arreglos}
+%-----------------------------------------------------
+
+Aunque los arreglos son útiles, presentan la limitación de requerir un tamaño fijo definido al momento de su creación. Para superar esta restricción, C++ ofrece la estructura \texttt{vector}, la cual permite manejar colecciones de datos de tamaño dinámico.
+
+Desde un punto de vista didáctico, los vectores facilitan el trabajo con datos cuyo número de observaciones no se conoce de antemano, una situación común en aplicaciones actuariales reales.
+
+%-----------------------------------------------------
+\subsection{Ejemplo: uso de vectores para datos empíricos}
+%-----------------------------------------------------
+
+El siguiente ejemplo muestra cómo utilizar un vector para almacenar montos de siniestros y calcular estadísticas básicas.
+
+\begin{lstlisting}[caption=VectorSiniestros.cpp]
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    int n;
+    double monto;
+
+    vector<double> siniestros;
+
+    cout << "Ingrese el numero de siniestros observados: ";
+    cin >> n;
+
+    for (int i = 0; i < n; i++) {
+        cout << "Ingrese el monto del siniestro " << i + 1 << ": ";
+        cin >> monto;
+        siniestros.push_back(monto);
+    }
+
+    double suma = 0.0;
+    for (int i = 0; i < siniestros.size(); i++) {
+        suma += siniestros[i];
+    }
+
+    double promedio = suma / siniestros.size();
+
+    cout << "Monto promedio de siniestros: " << promedio << endl;
+
+    return 0;
+}
+\end{lstlisting}
+
+Este enfoque resulta más robusto y flexible, permitiendo extender fácilmente el programa para realizar análisis más complejos sin modificar la estructura básica del código.
+
+%-----------------------------------------------------
+\subsection{Interpretación actuarial de los datos almacenados}
+%-----------------------------------------------------
+
+El almacenamiento de datos en arreglos o vectores permite al actuario analizar empíricamente el comportamiento de una variable aleatoria. A partir de estas estructuras, es posible calcular medidas descriptivas como promedios, máximos, mínimos y frecuencias relativas, las cuales constituyen insumos fundamentales para la construcción de modelos probabilísticos.
+
+Asimismo, el análisis de datos discretos mediante programación facilita la validación de supuestos teóricos y la exploración de patrones que pueden no ser evidentes a partir de expresiones analíticas cerradas.
+
+%-----------------------------------------------------
+\subsection{Preparación para simulación y modelación estocástica}
+%-----------------------------------------------------
+
+El dominio de arreglos y vectores es un requisito indispensable para la implementación de técnicas de simulación, como el método de Monte Carlo. En dichas aplicaciones, los resultados de múltiples experimentos aleatorios se almacenan y analizan mediante estructuras de datos, permitiendo aproximar distribuciones, momentos y probabilidades de interés actuarial.
+
+Por esta razón, el estudio de arreglos y vectores constituye un paso intermedio esencial entre la modelación determinística y la introducción formal de modelos estocásticos, que será abordada en el siguiente capítulo.
+
+%-----------------------------------------------------
+\subsection{Objetivos de aprendizaje del capítulo}
+%-----------------------------------------------------
+
+Al finalizar este capítulo, se espera que el estudiante sea capaz de:
+\begin{enumerate}
+    \item Comprender el concepto de arreglo y vector como estructuras de datos fundamentales.
+    \item Almacenar y manipular conjuntos de datos cuantitativos en C++.
+    \item Integrar arreglos y vectores con estructuras iterativas.
+    \item Interpretar datos discretos desde una perspectiva actuarial.
+    \item Preparar estructuras de datos para su uso en simulaciones y modelos estocásticos.
+\end{enumerate}
+
+%=====================================================
+\section{Introducción a la Simulación y al Método de Monte Carlo}
+%=====================================================
+
+En muchos problemas actuariales, el análisis exacto mediante expresiones analíticas cerradas resulta complejo o incluso inviable, especialmente cuando intervienen múltiples fuentes de incertidumbre o estructuras no lineales. En estos casos, la \textit{simulación} se convierte en una herramienta fundamental para aproximar el comportamiento de los modelos y analizar sus resultados.
+
+El método de Monte Carlo constituye una de las técnicas de simulación más utilizadas en Actuaría, Finanzas y Ciencias de la Ingeniería. Su principio básico consiste en generar un gran número de realizaciones de un experimento aleatorio y utilizar los resultados obtenidos para aproximar cantidades de interés, como esperanzas, probabilidades o distribuciones empíricas.
+
+%-----------------------------------------------------
+\subsection{Simulación como herramienta computacional}
+%-----------------------------------------------------
+
+Desde una perspectiva computacional, la simulación permite reproducir artificialmente el comportamiento de un fenómeno incierto mediante el uso de números aleatorios. A diferencia de los modelos determinísticos, en los que los resultados están completamente definidos por los valores de entrada, los modelos estocásticos incorporan variabilidad y producen resultados distintos en cada ejecución.
+
+En el contexto actuarial, la simulación se emplea para analizar riesgos, evaluar escenarios extremos, estimar distribuciones de pérdidas y estudiar el impacto de la incertidumbre sobre indicadores clave. La programación en C++ facilita la implementación eficiente de estos procedimientos, incluso cuando se requiere un gran número de repeticiones.
+
+%-----------------------------------------------------
+\subsection{Generación de números pseudoaleatorios}
+%-----------------------------------------------------
+
+Las computadoras no generan números aleatorios verdaderos, sino secuencias determinísticas que imitan el comportamiento del azar, conocidas como \textit{números pseudoaleatorios}. En C++, la generación de estos números se realiza mediante funciones específicas que producen valores distribuidos de manera aproximadamente uniforme en un intervalo dado.
+
+El uso correcto de generadores pseudoaleatorios es un aspecto clave en la simulación, ya que la calidad de los resultados depende en gran medida de la adecuada inicialización y utilización de dichos generadores.
+
+%-----------------------------------------------------
+\subsection{Primer ejemplo: simulación de una variable uniforme}
+%-----------------------------------------------------
+
+El siguiente programa genera valores pseudoaleatorios uniformes en el intervalo $(0,1)$ y calcula su promedio empírico. Este ejemplo ilustra el principio básico del método de Monte Carlo.
+
+\begin{lstlisting}[caption=UniformeMonteCarlo.cpp]
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+int main() {
+    int n;
+    double suma = 0.0;
+
+    cout << "Ingrese el numero de simulaciones: ";
+    cin >> n;
+
+    srand(time(0));
+
+    for (int i = 0; i < n; i++) {
+        double u = (double) rand() / RAND_MAX;
+        suma += u;
+    }
+
+    double promedio = suma / n;
+
+    cout << "Promedio empirico: " << promedio << endl;
+    cout << "Valor teorico esperado: 0.5" << endl;
+
+    return 0;
+}
+\end{lstlisting}
+
+Este ejemplo permite observar cómo el promedio empírico se aproxima al valor esperado teórico a medida que aumenta el número de simulaciones, ilustrando la ley de los grandes números.
+
+%-----------------------------------------------------
+\subsection{Simulación de una variable aleatoria discreta}
+%-----------------------------------------------------
+
+En Actuaría, muchas variables de interés se modelan de forma discreta, como el número de siniestros en un periodo. La simulación de este tipo de variables puede realizarse mediante reglas simples basadas en probabilidades acumuladas.
+
+El siguiente ejemplo simula el número de siniestros bajo un modelo discreto sencillo.
+
+\begin{lstlisting}[caption=SiniestrosDiscretos.cpp]
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+int main() {
+    int n;
+    int siniestros = 0;
+
+    cout << "Ingrese el numero de simulaciones: ";
+    cin >> n;
+
+    srand(time(0));
+
+    for (int i = 0; i < n; i++) {
+        double u = (double) rand() / RAND_MAX;
+
+        if (u < 0.6) {
+            siniestros += 0;
+        } else if (u < 0.9) {
+            siniestros += 1;
+        } else {
+            siniestros += 2;
+        }
+    }
+
+    double promedio = (double) siniestros / n;
+
+    cout << "Numero promedio de siniestros: " << promedio << endl;
+
+    return 0;
+}
+\end{lstlisting}
+
+Este tipo de simulación permite aproximar características de una variable aleatoria sin recurrir a fórmulas explícitas.
+
+%-----------------------------------------------------
+\subsection{Simulación actuarial: estimación empírica de la esperanza}
+%-----------------------------------------------------
+
+Uno de los usos más comunes del método de Monte Carlo en Actuaría es la estimación empírica de valores esperados. A partir de múltiples simulaciones, es posible aproximar la esperanza matemática de una variable aleatoria y analizar la variabilidad de los resultados.
+
+El siguiente ejemplo simula montos de siniestros y estima su valor esperado empírico.
+
+\begin{lstlisting}[caption=EsperanzaEmpirica.cpp]
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+int main() {
+    int n;
+    double suma = 0.0;
+
+    cout << "Ingrese el numero de simulaciones: ";
+    cin >> n;
+
+    srand(time(0));
+
+    for (int i = 0; i < n; i++) {
+        double u = (double) rand() / RAND_MAX;
+        double siniestro = 1000 + 4000 * u;
+        suma += siniestro;
+    }
+
+    double esperanza = suma / n;
+
+    cout << "Esperanza empirica del siniestro: " << esperanza << endl;
+
+    return 0;
+}
+\end{lstlisting}
+
+Este ejemplo ilustra cómo la simulación permite aproximar momentos de una distribución sin conocer explícitamente su función de densidad.
+
+%-----------------------------------------------------
+\subsection{Importancia del número de simulaciones}
+%-----------------------------------------------------
+
+La precisión de las estimaciones obtenidas mediante el método de Monte Carlo depende del número de simulaciones realizadas. En general, a mayor número de simulaciones, menor será la variabilidad de los estimadores empíricos, aunque a costa de un mayor tiempo de cómputo.
+
+Comprender este compromiso entre precisión y eficiencia computacional es fundamental en la práctica actuarial, donde se deben tomar decisiones informadas sobre la cantidad de simulaciones necesarias para obtener resultados confiables.
+
+%-----------------------------------------------------
+
+
+
+
+%=====================================================
+\end{document}
+%=====================================================
