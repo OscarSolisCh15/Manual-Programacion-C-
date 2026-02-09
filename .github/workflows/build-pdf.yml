@@ -16,27 +16,62 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Debug tree
+      - name: Detect root .tex (auto)
+        id: detect
+        shell: bash
         run: |
+          set -euo pipefail
+
           echo "===== ROOT ====="
           ls -la
+          echo ""
           echo "===== TEX FOLDER ====="
           ls -la tex || true
-          echo "===== FIND TEX ====="
-          find . -maxdepth 4 -type f -name "*.tex" -print
+          echo ""
+          echo "===== FIND .TEX FILES (max depth 3) ====="
+          find . -maxdepth 3 -type f -name "*.tex" -print | sort
 
-      - name: Ensure main.tex exists
-        run: |
-          test -f main.tex || (echo "ERROR: tex/main.tex NO existe. Renombra o corrige root_file." && exit 1)
+          # 1) Prefer tex/main.tex if it exists
+          if [[ -f "tex/main.tex" ]]; then
+            root="tex/main.tex"
+          # 2) Otherwise, prefer main.tex at repo root
+          elif [[ -f "main.tex" ]]; then
+            root="main.tex"
+          else
+            # 3) Otherwise, if there's exactly ONE .tex inside tex/, use it
+            mapfile -t files < <(find tex -maxdepth 1 -type f -name "*.tex" -print | sort || true)
+
+            if [[ ${#files[@]} -eq 1 ]]; then
+              root="${files[0]}"
+            else
+              echo "::error::No root TeX file found. Fix one of these:"
+              echo "1) Put your main file at tex/main.tex (recommended), OR"
+              echo "2) Put your main file at main.tex in repo root, OR"
+              echo "3) Ensure there is EXACTLY ONE .tex file inside tex/"
+              echo ""
+              echo "Found ${#files[@]} .tex files in tex/:"
+              printf '%s\n' "${files[@]}"
+              exit 1
+            fi
+          fi
+
+          pdf="${root%.tex}.pdf"
+
+          echo "root_file=$root" >> "$GITHUB_OUTPUT"
+          echo "pdf_file=$pdf" >> "$GITHUB_OUTPUT"
+
+          echo ""
+          echo ">>> Using root_file: $root"
+          echo ">>> Expected PDF:    $pdf"
 
       - name: Compile LaTeX
         uses: xu-cheng/latex-action@v4
         with:
-          working_directory: tex
-          root_file: main.tex
+          root_file: ${{ steps.detect.outputs.root_file }}
+          work_in_root_file_dir: true
 
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Manual
-          path: tex/main.pdf
+          name: Manual-PDF
+          path: ${{ steps.detect.outputs.pdf_file }}
